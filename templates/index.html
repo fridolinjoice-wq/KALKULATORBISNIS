@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator Jualan Online</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #ff9a9e, #fecfef);
+            text-align: center;
+        }
+
+        h1 { color: white; }
+
+        .subtitle {
+            color: white;
+            font-size: 14px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            width: 320px;
+            margin: 30px auto;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 6px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        input:focus {
+            outline: none;
+            border: 1px solid #ff6f91;
+            box-shadow: 0 0 5px pink;
+        }
+
+        button {
+            width: 95%;
+            padding: 12px;
+            background: #ff6f91;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #ff3f6c;
+            transform: scale(1.05);
+        }
+
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .profit { background: #d4edda; color: green; }
+        .loss { background: #f8d7da; color: red; }
+
+        .detail {
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .profile-btn {
+            margin-top: 15px;
+            padding: 6px 12px;
+            font-size: 12px;
+            width: auto;
+            background: #ff85a2;
+        }
+
+        /* STIKER BESAR */
+        .sticker {
+            position: fixed;
+            font-size: 60px;
+            opacity: 0.1;
+            animation: float 8s infinite alternate;
+        }
+
+        .sticker:nth-child(1) { top: 5%; left: 5%; }
+        .sticker:nth-child(2) { top: 10%; right: 5%; }
+        .sticker:nth-child(3) { top: 40%; left: 10%; }
+        .sticker:nth-child(4) { top: 60%; right: 10%; }
+        .sticker:nth-child(5) { bottom: 10%; left: 5%; }
+        .sticker:nth-child(6) { bottom: 15%; right: 5%; }
+        .sticker:nth-child(7) { top: 30%; left: 50%; }
+        .sticker:nth-child(8) { bottom: 30%; right: 40%; }
+        .sticker:nth-child(9) { top: 70%; left: 30%; }
+        .sticker:nth-child(10){ top: 20%; left: 70%; }
+
+        @keyframes float {
+            from { transform: translateY(0px); }
+            to { transform: translateY(20px); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- STIKER -->
+<div class="sticker">🛒</div>
+<div class="sticker">💰</div>
+<div class="sticker">📦</div>
+<div class="sticker">📊</div>
+<div class="sticker">🏷️</div>
+<div class="sticker">💳</div>
+<div class="sticker">📈</div>
+<div class="sticker">🧾</div>
+<div class="sticker">🏪</div>
+<div class="sticker">💵</div>
+
+<h1>Kalkulator Jualan Online 💸</h1>
+<p class="subtitle">Simulasikan keuntungan bisnis sebelum mulai jualan</p>
+
+<div class="card">
+
+<form method="POST">
+    <input type="number" name="modal" placeholder="Harga Modal" required min="0">
+    <input type="number" name="jual" placeholder="Harga Jual" required min="0">
+    <input type="number" name="diskon" placeholder="Diskon (%)" required min="0">
+    <input type="number" name="ongkir" placeholder="Ongkir" required min="0">
+    <input type="number" name="fee" placeholder="Fee Marketplace (%)" required min="0">
+
+    <button type="submit">Hitung Profit</button>
+</form>
+
+{% if hasil %}
+<div class="result {% if hasil.profit > 0 %}profit{% else %}loss{% endif %}">
+    <p>Harga Setelah Diskon: Rp {{ "{:,.0f}".format(hasil.harga_diskon) }}</p>
+    <p>Profit: Rp {{ "{:,.0f}".format(hasil.profit) }}</p>
+    <p>Persentase: {{ hasil.persen }}%</p>
+
+    <div class="detail">
+        <p>Diskon: Rp {{ "{:,.0f}".format(hasil.diskon) }}</p>
+        <p>Fee Marketplace: Rp {{ "{:,.0f}".format(hasil.fee) }}</p>
+    </div>
+
+    <p><b>{{ hasil.insight }}</b></p>
+</div>
+{% endif %}
+
+</div>
+
+<!-- tombol profil di luar -->
+<form action="/profil">
+    <button class="profile-btn">Profil</button>
+</form>
+
+<hr>
+<p style="font-size:12px; color:white;">
+© 2026 | Fridolin Joice Padandi | Bisnis Digital
+</p>
+
+</body>
+</html>
