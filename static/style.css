@@ -1,0 +1,165 @@
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial;
+    background: #0f172a;
+    color: white;
+    transition: 0.4s ease;
+}
+
+/* LIGHT MODE */
+.light {
+    background: #f8fafc;
+    color: #0f172a;
+}
+
+/* TOPBAR */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+}
+
+/* MODE BUTTON */
+.mode {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    border: none;
+    cursor: pointer;
+    background: rgba(255,255,255,0.1);
+    transition: 0.3s;
+}
+
+.mode:hover {
+    transform: scale(1.1);
+}
+
+/* WELCOME */
+.welcome {
+    text-align: center;
+    padding: 20px 15px;
+    max-width: 600px;
+    margin: auto;
+}
+
+.welcome h2 {
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+/* DESC */
+.desc {
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 1.6;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.hero h1 {
+    font-size: 26px;
+}
+
+/* ICON ANIMASI */
+.icon {
+    font-size: 60px;
+    animation: float 2.5s ease-in-out infinite;
+}
+
+/* CARD */
+.card {
+    width: 320px;
+    margin: 15px auto;
+    padding: 18px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    backdrop-filter: blur(8px);
+}
+
+/* INPUT */
+input {
+    width: 92%;
+    padding: 12px;
+    margin: 6px 0;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* RESET BUTTON */
+.reset-btn {
+    display: inline-block;
+    margin: 10px auto;
+    padding: 10px 14px;
+    background: #ef4444;
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+/* ========================= */
+/* FIX RIWAYAT TRANSAKSI BUG */
+/* ========================= */
+
+.section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* INI YANG BIKIN CENTER */
+    margin-top: 20px;
+}
+
+.section h3 {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* HISTORY CARD */
+.history {
+    width: 320px;
+    margin: 10px auto;
+    padding: 12px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px;
+    border-left: 4px solid transparent;
+    transition: 0.3s;
+}
+
+.history:hover {
+    transform: scale(1.02);
+}
+
+/* STATUS */
+.surplus { border-left-color: #22c55e; }
+.defisit { border-left-color: #ef4444; }
+.imbang { border-left-color: #f59e0b; }
+
+/* FLOAT ANIMATION */
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}

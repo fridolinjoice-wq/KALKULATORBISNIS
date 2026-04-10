@@ -1,61 +1,73 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
+import sqlite3
+from datetime import datetime
 
 app = Flask(__name__)
+
+# DATABASE
+def init_db():
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS cashflow (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            pendapatan REAL,
+            pengeluaran REAL,
+            hasil REAL,
+            status TEXT,
+            waktu TEXT
+        )
+    """)
+    conn.commit()
+    conn.close()
+
+init_db()
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     hasil = None
+    status = None
 
     if request.method == "POST":
-        try:
-            modal = float(request.form["modal"])
-            jual = float(request.form["jual"])
-            diskon = float(request.form["diskon"])
-            ongkir = float(request.form["ongkir"])
-            fee = float(request.form["fee"])
+        pendapatan = float(request.form["pendapatan"])
+        pengeluaran = float(request.form["pengeluaran"])
 
-            # perhitungan
-            harga_setelah_diskon = jual - (jual * diskon / 100)
-            potongan_diskon = jual * diskon / 100
-            potongan_fee = harga_setelah_diskon * fee / 100
-            profit = harga_setelah_diskon - modal - ongkir - potongan_fee
-            persen = (profit / modal) * 100
+        hasil = pendapatan - pengeluaran
 
-            # insight
-            if jual < modal:
-                insight = "Harga jual lebih rendah dari modal, pasti rugi."
-            elif profit > 50000:
-                insight = "Bisnis sangat menguntungkan."
-            elif profit > 0:
-                insight = "Masih untung, tapi bisa ditingkatkan."
-            else:
-                insight = "Rugi, pertimbangkan strategi ulang."
+        if hasil > 0:
+            status = "surplus"
+        elif hasil < 0:
+            status = "defisit"
+        else:
+            status = "imbang"
 
-            hasil = {
-                "harga_diskon": round(harga_setelah_diskon, 2),
-                "profit": round(profit, 2),
-                "persen": round(persen, 2),
-                "diskon": round(potongan_diskon, 2),
-                "fee": round(potongan_fee, 2),
-                "insight": insight
-            }
+        conn = sqlite3.connect("database.db")
+        c = conn.cursor()
+        c.execute("""
+            INSERT INTO cashflow (pendapatan, pengeluaran, hasil, status, waktu)
+            VALUES (?, ?, ?, ?, ?)
+        """, (pendapatan, pengeluaran, hasil, status, datetime.now()))
+        conn.commit()
+        conn.close()
 
-        except:
-            hasil = {
-                "harga_diskon": 0,
-                "profit": 0,
-                "persen": 0,
-                "diskon": 0,
-                "fee": 0,
-                "insight": "Terjadi kesalahan input."
-            }
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM cashflow ORDER BY id DESC")
+    data = c.fetchall()
+    conn.close()
 
-    return render_template("index.html", hasil=hasil)
+    return render_template("index.html", hasil=hasil, status=status, data=data)
 
 
-@app.route("/profil")
-def profil():
-    return render_template("profil.html")
+# 🔥 RESET TOTAL DATABASE
+@app.route("/reset")
+def reset():
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("DELETE FROM cashflow")
+    conn.commit()
+    conn.close()
+    return redirect("/")
 
 
 if __name__ == "__main__":
