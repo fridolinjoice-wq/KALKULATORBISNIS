@@ -27,6 +27,21 @@ Aplikasi ini adalah web berbasis Python (Flask) yang digunakan untuk menghitung 
 ## Buka di browser
 http://127.0.0.1:5000
 
+## 📸 Screenshot
+
+### Halaman Welcome
+![Welcome](ss/welcome.png)
+
+### Form Input
+![Input](ss/input.png)
+
+### Hasil Perhitungan
+![Hasil](ss/hasil.png)
+
+### Grafik
+![Chart](ss/chart.png)
+
+
 
 ---
 
